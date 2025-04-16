@@ -80,8 +80,6 @@ public class SudokuBoard extends GridPane {
                 int globalRow = sectionRow * SECTION_SIZE + row;
                 int globalCol = sectionCol * SECTION_SIZE + col;
 
-                System.out.printf("Inserindo célula em: %d %d\n", globalRow, globalCol);
-
                 var cell = new SudokuCell();
                 globalCells[globalRow][globalCol] = cell;
                 section.add(cell, col, row);
