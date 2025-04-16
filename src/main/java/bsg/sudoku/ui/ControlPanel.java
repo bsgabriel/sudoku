@@ -1,15 +1,17 @@
 package bsg.sudoku.ui;
 
+import bsg.sudoku.controller.GameController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 
 public class ControlPanel extends HBox {
-    public ControlPanel() {
-        Button validarBtn = createButton("Validar", () -> System.out.println("Clicou validar"));
-        Button resetarBtn = createButton("Resetar", () -> System.out.println("Clicou resetar"));
-        Button novoJogoBtn = createButton("Novo jogo", () -> System.out.println("Clicou novo jogo"));
+
+    public ControlPanel(GameController gameController) {
+        Button validarBtn = createButton("Validar", () -> System.out.println(gameController.validateBoard() ? "Tudo certo!" : "Há erros ou espaços vazios."));
+        Button resetarBtn = createButton("Resetar", gameController::resetGame);
+        Button novoJogoBtn = createButton("Novo jogo", () -> gameController.startNewGame(40));
 
         setSpacing(20);
         setAlignment(Pos.CENTER);
