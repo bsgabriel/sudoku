@@ -7,11 +7,14 @@ import javafx.scene.control.TextField;
 public class SudokuCell extends TextField {
 
     private static final int MAX_DIGITS = 1;
+    private static final int CELL_SIZE = 50;
+
     private final BooleanProperty fixed = new SimpleBooleanProperty(false);
 
     public SudokuCell() {
         initializeProperties();
         setStyle("-fx-font-size: 18; -fx-alignment: center;");
+        setPrefSize(CELL_SIZE, CELL_SIZE);
         setupFixedBinding();
     }
 
