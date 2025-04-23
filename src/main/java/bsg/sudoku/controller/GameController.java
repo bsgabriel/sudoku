@@ -3,12 +3,15 @@ package bsg.sudoku.controller;
 import bsg.sudoku.core.SudokuLogic;
 import bsg.sudoku.ui.SudokuBoard;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
 
-import static bsg.sudoku.util.ArrayUtil.*;
+import static bsg.sudoku.util.ArrayUtil.deepCopy;
+import static bsg.sudoku.util.ArrayUtil.matrixToString;
 import static bsg.sudoku.util.Constants.BOARD_SIZE;
 
+@Slf4j
 @RequiredArgsConstructor
 public class GameController {
 
@@ -25,6 +28,9 @@ public class GameController {
         sudokuLogic.removeCells(fullBoard, cellsToRemove);
         currentPuzzle = deepCopy(fullBoard, BOARD_SIZE);
         sudokuBoard.loadPuzzle(currentPuzzle);
+
+        log.info("full board {}", matrixToString(this.generatedBoard));
+        log.info("generated puzze {}", matrixToString(currentPuzzle));
     }
 
     public void resetGame() {
