@@ -6,10 +6,14 @@ import static bsg.sudoku.util.Constants.SECTION_SIZE;
 
 public class SudokuSolver {
 
-    public boolean isValid(int[][] board, int row, int col, int number) {
+    public boolean isValid(int[][] board, int row, int col, int number, boolean ignoreSelf) {
 
         // Verifica todas as colunas da linha atual
         for (int c = 0; c < BOARD_SIZE; c++) {
+            if (ignoreSelf && c == col) {
+                continue;
+            }
+
             if (board[row][c] == number) {
                 return false;
             }
@@ -17,6 +21,10 @@ public class SudokuSolver {
 
         // Verifica todas as linhas da coluna atual
         for (int r = 0; r < BOARD_SIZE; r++) {
+            if (ignoreSelf && r == row) {
+                continue;
+            }
+
             if (board[r][col] == number) {
                 return false;
             }
@@ -30,6 +38,11 @@ public class SudokuSolver {
             for (int j = 0; j < SECTION_SIZE; j++) {
                 int r = startRow + i;
                 int c = startCol + j;
+
+                if (ignoreSelf && c == col && r == row) {
+                    continue;
+                }
+
                 if (board[r][c] == number) {
                     return false;
                 }
@@ -54,7 +67,7 @@ public class SudokuSolver {
                 }
 
                 for (int num = 1; num <= BOARD_SIZE; num++) {
-                    if (!isValid(board, row, col, num)) {
+                    if (!isValid(board, row, col, num, false)) {
                         continue;
                     }
 

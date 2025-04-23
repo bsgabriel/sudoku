@@ -30,7 +30,7 @@ public class SudokuGenerator {
 
                 var numbers = generateShuffledNumbers();
                 for (int number : numbers) {
-                    if (!sudokuSolver.isValid(board, row, col, number)) {
+                    if (!sudokuSolver.isValid(board, row, col, number, false)) {
                         continue;
                     }
 

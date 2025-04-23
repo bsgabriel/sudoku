@@ -40,7 +40,7 @@ public class GameController {
                     return false;
                 }
 
-                if (!sudokuSolver.isValid(state, row, col, value)) {
+                if (!sudokuSolver.isValid(state, row, col, value, true)) {
                     return false;
                 }
             }
