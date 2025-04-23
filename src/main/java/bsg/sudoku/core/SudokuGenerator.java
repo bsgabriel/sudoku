@@ -18,29 +18,7 @@ public class SudokuGenerator {
     public int[][] generateFullBoard() {
         int[][] board = new int[BOARD_SIZE][BOARD_SIZE];
         fillBoard(board);
-        printBoard(board);
         return board;
-    }
-
-    private void printBoard(int[][] board) {
-        String result = Arrays.stream(board)
-                .flatMapToInt(Arrays::stream)
-                .mapToObj(String::valueOf)
-                .collect(Collectors.joining(","));
-        System.out.printf("'%s'", result);
-
-                /* para validar:
-            > acessar: https://www.birot.hu/sudoku.php
-            > gerar uma string nesse método aqui
-            > jogar o seguinte trecho de código no console, substituindo RESULTADO pela string gerada:
-                const strNumbers = RESULTADO
-                const inputs = document.querySelectorAll('input[type="text"]')
-                const numbers = strNumbers.split(',')
-
-                for(let i = 0; i < inputs.length; i++) {
-                  inputs[i].value = numbers[i]
-                }
-         */
     }
 
     private boolean fillBoard(int[][] board) {
