@@ -3,7 +3,7 @@ package bsg.sudoku.util;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-public final class ArrayUtil {
+public final class MatrixUtil {
 
     public static int[][] deepCopy(int[][] board, int size) {
         int[][] copy = new int[size][size];

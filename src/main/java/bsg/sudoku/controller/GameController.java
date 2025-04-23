@@ -7,8 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
 
-import static bsg.sudoku.util.ArrayUtil.deepCopy;
-import static bsg.sudoku.util.ArrayUtil.matrixToString;
+import static bsg.sudoku.util.MatrixUtil.deepCopy;
+import static bsg.sudoku.util.MatrixUtil.matrixToString;
 import static bsg.sudoku.util.Constants.BOARD_SIZE;
 
 @Slf4j

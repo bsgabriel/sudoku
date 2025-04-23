@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static bsg.sudoku.util.ArrayUtil.deepCopy;
+import static bsg.sudoku.util.MatrixUtil.deepCopy;
 import static bsg.sudoku.util.Constants.BOARD_SIZE;
 import static bsg.sudoku.util.Constants.SECTION_SIZE;
 
