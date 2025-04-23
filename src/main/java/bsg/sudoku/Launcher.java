@@ -1,9 +1,7 @@
 package bsg.sudoku;
 
 import bsg.sudoku.controller.GameController;
-import bsg.sudoku.core.PuzzleCreator;
-import bsg.sudoku.core.SudokuGenerator;
-import bsg.sudoku.core.SudokuSolver;
+import bsg.sudoku.core.SudokuLogic;
 import bsg.sudoku.ui.ControlPanel;
 import bsg.sudoku.ui.SudokuBoard;
 import javafx.application.Application;
@@ -19,11 +17,9 @@ public class Launcher extends Application {
     @Override
     public void start(Stage primaryStage) {
         var board = new SudokuBoard();
-        var solver = new SudokuSolver();
-        var puzzleCreator = new PuzzleCreator(solver);
-        var sudokuGenerator = new SudokuGenerator(solver);
+        var sudokuLogic = new SudokuLogic();
 
-        var controller = new GameController(board, solver, puzzleCreator, sudokuGenerator);
+        var controller = new GameController(board, sudokuLogic);
         var controlPanel = new ControlPanel(controller);
 
         VBox root = new VBox(board, controlPanel);
