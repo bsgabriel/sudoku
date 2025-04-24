@@ -2,8 +2,8 @@ package bsg.sudoku.controller;
 
 import bsg.sudoku.core.SudokuLogic;
 import bsg.sudoku.ui.SudokuBoard;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 
@@ -11,15 +11,20 @@ import static bsg.sudoku.util.MatrixUtil.deepCopy;
 import static bsg.sudoku.util.MatrixUtil.matrixToString;
 import static bsg.sudoku.util.Constants.BOARD_SIZE;
 
-@Slf4j
-@RequiredArgsConstructor
 public class GameController {
+
+    private static final Logger log = LoggerFactory.getLogger(GameController.class);
 
     private final SudokuBoard sudokuBoard;
     private final SudokuLogic sudokuLogic;
 
     private int[][] currentPuzzle;
     private int[][] generatedBoard;
+
+    public GameController(SudokuBoard sudokuBoard, SudokuLogic sudokuLogic) {
+        this.sudokuBoard = sudokuBoard;
+        this.sudokuLogic = sudokuLogic;
+    }
 
     public void startNewGame(int cellsToRemove) {
         int[][] fullBoard = sudokuLogic.generateFullBoard();
