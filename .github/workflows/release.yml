@@ -1,0 +1,77 @@
+name: Release and Publish
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+
+jobs:
+  release:
+    if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'release')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Extract version from branch name
+        run: |
+          VERSION=$(echo "${{ github.event.pull_request.head.ref }}" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+')
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin https://x-access-token:${{ secrets.GH_PUSH_TOKEN }}@github.com/${{ github.repository }}
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Create tmp folder
+        run: mkdir -p tmp
+
+      - name: Build windows version
+        run: |
+          mvn clean package -Pwindows
+          cp target/sudoku-*.jar ./tmp
+
+      - name: Build linux version
+        run: |
+          mvn clean package -Plinux
+          cp target/sudoku-*.jar ./tmp
+
+      - name: Update POM version
+        run: mvn versions:set -DnewVersion=${{ env.VERSION }}
+
+      - name: Update CHANGELOG and commit
+        run: |
+          sed -i "s/Current/${{ env.VERSION }}/g" CHANGELOG.md
+          git add pom.xml CHANGELOG.md
+          git commit -m "Release version ${{ env.VERSION }}"
+          git tag v${{ env.VERSION }}
+          git push origin main --follow-tags
+
+      - name: Extract changelog for release
+        id: changelog
+        run: |
+          awk "/^## ${{ env.VERSION }}/{flag=1; next} /^## /{flag=0} flag" CHANGELOG.md > body.md
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ env.VERSION }}
+          name: v${{ env.VERSION }}
+          body_path: body.md
+          files: |
+            tmp/*.jar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PUSH_TOKEN }}
