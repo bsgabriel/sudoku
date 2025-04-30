@@ -1,3 +1,4 @@
 # Changelog
 
 ## Current
+- Primeira release
